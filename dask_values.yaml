@@ -1,0 +1,119 @@
+jupyter:
+  affinity: {}
+  args: null
+  command: null
+  enabled: true
+  env: null
+  extraConfig: |-
+    # Extra Jupyter config goes here
+    # E.g
+    # c.NotebookApp.port = 8888
+  image:
+    pullPolicy: IfNotPresent
+    pullSecrets: null
+    repository: docker.io/pculurciello/dask-notebook
+    tag: manual-build
+  ingress:
+    annotations: {}
+    enabled: true
+    hostname: dask-jupyter.pculurc.dev.draios.com
+    pathType: Prefix
+    tls: true
+  livenessProbe: {}
+  mounts: {}
+  name: jupyter
+  nodeSelector: {}
+  password: <OMITTED>
+  rbac: true
+  readinessProbe: {}
+  resources: {}
+  securityContext: {}
+  serviceAccountName: dask-jupyter
+  servicePort: 80
+  serviceType: ClusterIP
+  tolerations: []
+scheduler:
+  affinity: {}
+  enabled: true
+  extraArgs: []
+  image:
+    pullPolicy: IfNotPresent
+    pullSecrets: null
+    repository: docker.io/pculurciello/dask-asset
+    tag: manual-build
+  ingress:
+    annotations: {}
+    enabled: true
+    hostname: dask-scheduler.pculurc.dev.draios.com
+    pathType: Prefix
+    tls: true
+  livenessProbe: {}
+  loadBalancerIP: null
+  metrics:
+    enabled: false
+    serviceMonitor:
+      additionalLabels: {}
+      enabled: false
+      interval: 30s
+      jobLabel: ""
+      metricRelabelings: []
+      namespace: ""
+      namespaceSelector: {}
+      targetLabels: []
+  name: scheduler
+  nodeSelector: {}
+  readinessProbe: {}
+  replicas: 1
+  resources: {}
+  securityContext: {}
+  serviceAnnotations: {}
+  servicePort: 8786
+  serviceType: LoadBalancer
+  tolerations: []
+webUI:
+  ingress:
+    annotations: {}
+    enabled: true
+    hostname: dask-ui.pculurc.dev.draios.com
+    pathType: Prefix
+    tls: true
+  name: webui
+  servicePort: 80
+worker:
+  affinity: {}
+  annotations: {}
+  custom_scheduler_url: null
+  default_resources:
+    cpu: 1
+    memory: 4GiB
+  env: null
+  extraArgs: []
+  image:
+    dask_worker: dask-worker
+    pullPolicy: IfNotPresent
+    pullSecrets: null
+    repository: docker.io/pculurciello/dask-asset
+    tag: manual-build
+  livenessProbe: {}
+  metrics:
+    enabled: false
+    podMonitor:
+      additionalLabels: {}
+      enabled: false
+      interval: 30s
+      jobLabel: ""
+      metricRelabelings: []
+      namespace: ""
+      namespaceSelector: {}
+      podTargetLabels: []
+  mounts: {}
+  name: worker
+  nodeSelector: {}
+  portDashboard: 8790
+  readinessProbe: {}
+  replicas: 3
+  resources: {}
+  securityContext: {}
+  strategy:
+    type: RollingUpdate
+  tolerations: []
